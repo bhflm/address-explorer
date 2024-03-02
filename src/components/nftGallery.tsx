@@ -23,8 +23,8 @@ export function NftGallery({ address }: Props) {
   }, [address, fetchNfts])
 
   return (
-    <div className="flex flex-col items-center sm:flex-row sm:justify-center sm: flex-wrap">
-    { nfts && nfts.map((nft, i) => (<NftCard key={i} nftData={nft} />)) }
-  </div>
+    <div className="flex flex-col items-center sm:flex-row sm:justify-center sm:flex-wrap">
+      { nfts && nfts.map((nft, i) => (<NftCard key={i} nftData={nft} />)) }
+    </div>
   )
 };

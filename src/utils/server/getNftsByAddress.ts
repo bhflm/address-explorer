@@ -1,4 +1,7 @@
+"use server"
+
 import { OwnedNft } from "../../types/ownedNft";
+
 
 function mapDataToOwnedNfts(ownedNfts: any): OwnedNft[] {
   const formattedNfts = ownedNfts.map((nft: any) => {
@@ -19,14 +22,17 @@ function mapDataToOwnedNfts(ownedNfts: any): OwnedNft[] {
 
 // @@ TODO: Support pagination
 export async function getNftsByAddress(address: string): Promise< OwnedNft[] | null> { 
-  console.log('Calling server action getNftsByAddress');
-  // @@ WARNING
-  const removeMe = "API_KEY";
-  const apiKey =  process.env.ALCHEMY_API_KEY || removeMe;
-  // @@ WARNING
+  
+  const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
+
   try {
+
+    if (!ALCHEMY_API_KEY) {
+      throw new Error("Missing Alchemy Api Key");
+    }
+
     const options = { method: 'GET', headers: { accept: 'application/json' } };
-    const res = await fetch(`https://eth-mainnet.g.alchemy.com/nft/v3/${apiKey}/getNFTsForOwner?owner=${address}&withMetadata=true&pageSize=100`, options)
+    const res = await fetch(`https://eth-mainnet.g.alchemy.com/nft/v3/${ALCHEMY_API_KEY}/getNFTsForOwner?owner=${address}&withMetadata=true&pageSize=100`, options)
     const data = await res.json();
     
     if (data.ownedNfts.length == 0) {
