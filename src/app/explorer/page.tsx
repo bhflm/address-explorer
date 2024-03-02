@@ -41,7 +41,7 @@ export default function Explorer() {
 
         <div className="searchbar mt-8 mx-12 sm:mt-24 flex justify-center">
           <div className="flex flex-col items-center sm:mx-48 sm:w-1/3 px-4 py-2">
-              <Input className="w-full" type="address" placeholder="Address" onChange={(e) => {
+              <Input className="w-full truncate hover:text-clip" type="address" placeholder="Address" onChange={(e) => {
                 setAddress(e.target.value);
                 handleInputChange();
                }} />
