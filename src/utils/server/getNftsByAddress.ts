@@ -7,7 +7,6 @@ const defaultPlaceHolder = "http://placekitten.com/g/200/300";
 
 
 const getImageUrlOrDefaultPlaceholder = ({ imageData , contractData } : { imageData: ImageResponseData | null, contractData: ContractResponseData | null }): string => {
-  
   let imageUrl = defaultPlaceHolder;
   
   if (imageData && imageData.originalUrl) {
@@ -15,13 +14,10 @@ const getImageUrlOrDefaultPlaceholder = ({ imageData , contractData } : { imageD
   } else if (contractData && contractData.openSeaMetadata.imageUrl) {
     imageUrl = contractData.openSeaMetadata.imageUrl;
   }
-  
-  console.log("Image Url: ", imageUrl);
   return imageUrl;
 };
 
 const formatNftResponse = (nftResponse: NftApiResponse): OwnedNft => {
-  // Depending on the nft, might or might not have name, so we check in order of precedence regarding the response 
   const { contract } = nftResponse;
 
   const name = nftResponse.name || contract.name;
@@ -56,7 +52,7 @@ export const getNftsByAddress = async (address: string): Promise< OwnedNft[] | n
     const res = await fetch(`https://eth-mainnet.g.alchemy.com/nft/v3/${ALCHEMY_API_KEY}/getNFTsForOwner?owner=${address}&withMetadata=true&pageSize=100`, options)
     const data = await res.json();
 
-    if (data.ownedNfts.length == 0) {
+    if (!data.ownedNfts || data.ownedNfts.length == 0) {
       return [];
     }
 

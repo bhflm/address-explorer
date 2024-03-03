@@ -12,13 +12,23 @@ import {
 } from "@/src/components/ui/card"
 import { Button } from "@/src/components/ui/button"
 
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/src/components/ui/dialog"
+
 import { OwnedNft } from "../types/ownedNft";
 
 
 export function NftCard (props: { nftData: OwnedNft}) {
   const { nftData } = props;
-  
 
+  console.log('Nft data; ', nftData);
 
   return (
     <div className="flex flex-col items-center">
@@ -41,6 +51,19 @@ export function NftCard (props: { nftData: OwnedNft}) {
         {/* <p>{collectionName}</p>
         <p>{contract}</p>
         <p>{symbol}</p> */}
+        <Dialog>
+        <DialogTrigger>
+          <span className="text-xs text-white px-2 text-base bg-gray-800 border-1 rounded-xl p-0.5">Preview info</span>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{nftData.name}</DialogTitle>
+            <DialogDescription>
+              {nftData.description}
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
       </CardFooter>
     </Card>
     {/* <Button className="ml-8 w-1/4" type="submit">Preview</Button> //@@ TODO: If time is enoughdo preview of nft */}
