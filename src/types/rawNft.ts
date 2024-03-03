@@ -2,7 +2,7 @@
 interface AcquiredAtResponseData {
   blockTimestamp: number | null;
   blockNumber: number | null;
-};
+}
 
 interface MintResponseData {
   mintAddress: string | null;
@@ -33,7 +33,7 @@ interface RawNftData {
     url: string;
   };
   error: null;
-};
+}
 
 export interface ContractResponseData {
   address: string;
@@ -58,7 +58,7 @@ export interface ContractResponseData {
   };
   isSpam: boolean | null;
   spamClassifications: string[];
-};
+}
 
 export interface ImageResponseData {
   cachedUrl: string;

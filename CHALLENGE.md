@@ -1,7 +1,7 @@
 # ⛓️ Ethereum address explorer
 
 For this task, you will be building a small app that allows users to input any public Ethereum address and display its associated blockchain data.
-What data and how it is displayed is entirely up to you i.e. you can show token balances, transaction history, NFTs etc. 
+What data and how it is displayed is entirely up to you i.e. you can show token balances, transaction history, NFTs etc.
 
 In the end we want to see thoughtful, optimised and overall pleasant user experience on both desktop and mobile devices.
 Use tools you deem fit for the task, but remember to showcase your front-end skills.
@@ -16,12 +16,12 @@ Use tools you deem fit for the task, but remember to showcase your front-end ski
 
 ## 🧠 Suggestions
 
-* Remember this is a front-end exercise, thus we expect to see good UI/UX practices in your submission
-* Focus on doing one thing great, as opposed to many in an average way. For example, prioritise displaying particular data like NFTs or Transactions as opposed to trying to display everything in a rushed implementation
-* Consider UX expectations for both desktop and mobile, loading optimisations etc..
-* Think about data / input validation
-* Feel free to add any "extras" if you think they could compliment this task
-* **Try to scope this task in a way where it doesn't take up more than ~1 day of your time**
+- Remember this is a front-end exercise, thus we expect to see good UI/UX practices in your submission
+- Focus on doing one thing great, as opposed to many in an average way. For example, prioritise displaying particular data like NFTs or Transactions as opposed to trying to display everything in a rushed implementation
+- Consider UX expectations for both desktop and mobile, loading optimisations etc..
+- Think about data / input validation
+- Feel free to add any "extras" if you think they could compliment this task
+- **Try to scope this task in a way where it doesn't take up more than ~1 day of your time**
 
 ## ✅ Submission
 

@@ -5,5 +5,5 @@ export type OwnedNft = {
   symbol: string | null;
   collectionName: string | null;
   imageUrl: string;
-  thumbnailUrl: string ;
-}
+  thumbnailUrl: string;
+};
