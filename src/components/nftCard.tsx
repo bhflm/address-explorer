@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import * as React from "react" 
 import Image from "next/image";
 
@@ -17,21 +18,22 @@ import { OwnedNft } from "../types/ownedNft";
 export function NftCard (props: { nftData: OwnedNft}) {
   const { nftData } = props;
   
+
+
   return (
-    <div className="flex flex-col">
-    <Card className="border-white border-2 rounded-2xl bg-gradient-to-r from-slate-400 to-gray-800  w-[250px] h-[250px] my-2 sm:w-[450px] sm:m-8 sm:h-[450px]">
+    <div className="flex flex-col items-center">
+    <Card className="border-white border-2 rounded-2xl bg-gradient-to-r from-slate-400 to-gray-800 w-[250px] h-[250px] my-2 sm:w-[350px] sm:m-8 sm:h-[350px]">
       <CardHeader>
-        <CardTitle className="text-center text-white truncate hover:text-clip text-sm sm:text-2xl">{nftData.name ?? 'REPLACE_ME'}</CardTitle>
+        <CardTitle className="text-center text-white truncate hover:text-clip text-sm sm:text-2xl">{nftData.name}</CardTitle>
         {/* <CardDescription className="text-xs sm:text-base">{description}</CardDescription> @@SHOW ON OPEN */}
       </CardHeader>
       <CardContent className="flex justify-center">
-        <div className="w-[165px] h-[165px] sm:w-[225px] sm:h-[275px] relative">
+        <div className="w-[175px] h-[125px] sm:w-[225px] sm:h-[220px] relative">
           <Image
-            alt="Vercel Logo"
-            priority={true}
+            alt="Description of img REPLACE_ME"
             src={nftData.thumbnailUrl}
-            className="rounded-xl"
-            layout="fill"
+            fill={true}
+            className="rounded-2xl"
           />
         </div>
       </CardContent>

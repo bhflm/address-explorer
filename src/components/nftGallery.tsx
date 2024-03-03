@@ -10,16 +10,25 @@ type Props = {
 export function NftGallery({ address }: Props) {
 
   const [nfts, setNfts] = useState<OwnedNft[] >([])
+  const [isLoading, setLoading] = useState(true);
 
   const fetchNfts = useCallback(async () => {
-    const data = await getNftsByAddress(address);
-    if (data) {
-        setNfts(data);
+    try {
+      const fetchedNfts = await getNftsByAddress(address);
+      if (fetchedNfts) {
+        setNfts(fetchedNfts);
+      } else {
+        setNfts([]);
+      }
+    } catch (error) {
+      console.error('Error fetching NFTs:', error);
+      setNfts([]);
     }
   }, [address]);
-  
+
   useEffect(() => {
-     fetchNfts()
+    setLoading(true);
+    fetchNfts();
   }, [address, fetchNfts])
 
   return (

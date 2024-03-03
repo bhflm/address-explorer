@@ -10,7 +10,7 @@ export const fontSans = FontSans({
 })
 
 export const metadata: Metadata = {
-  title: "Address Explorer",
+  title: "Address NFT Explorer",
   description: "Ethereum Address Explorer that showcases any address or ens NFT",
 };
 
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(
-          "dark in-h-screen font-sans antialiased",
+          "bg-black in-h-screen font-sans antialiased",
           fontSans.variable
         )}>{children}</body>
     </html>

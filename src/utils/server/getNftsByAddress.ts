@@ -1,30 +1,51 @@
 "use server"
 
 import { OwnedNft } from "../../types/ownedNft";
+import { NftApiResponse, ImageResponseData, ContractResponseData } from "@/src/types/rawNft";
+
+const defaultPlaceHolder = "http://placekitten.com/g/200/300";
 
 
-function mapDataToOwnedNfts(ownedNfts: any): OwnedNft[] {
-  const formattedNfts = ownedNfts.map((nft: any) => {
-    return ({
-      contract: nft.contract.address,
-      symbol: nft.contract.symbol,
-      collectionName: nft.collection.name,
-      imageUrl: nft.image.pngUrl,
-      thumbnailUrl: nft.image.thumbnailUrl,
-      tokenType: nft.tokenType,
-      tokenId: nft.tokenId,
-      name: nft.name ?? 'REPLACE_ME_NAME',
-      description: nft.description ?? 'REPLACE_ME_DESCRIPTION',
-    });
+const getImageUrlOrDefaultPlaceholder = ({ imageData , contractData } : { imageData: ImageResponseData | null, contractData: ContractResponseData | null }): string => {
+  
+  let imageUrl = defaultPlaceHolder;
+  
+  if (imageData && imageData.originalUrl) {
+    imageUrl = imageData.originalUrl; 
+  } else if (contractData && contractData.openSeaMetadata.imageUrl) {
+    imageUrl = contractData.openSeaMetadata.imageUrl;
+  }
+  
+  console.log("Image Url: ", imageUrl);
+  return imageUrl;
+};
+
+const formatNftResponse = (nftResponse: NftApiResponse): OwnedNft => {
+  // Depending on the nft, might or might not have name, so we check in order of precedence regarding the response 
+  const { contract } = nftResponse;
+
+  const name = nftResponse.name || contract.name;
+
+  let imageUrl: string = getImageUrlOrDefaultPlaceholder({ imageData: nftResponse.image, contractData: contract });
+
+  return ({
+    name,
+    contract: contract?.address,
+    symbol: contract?.symbol,
+    collectionName: nftResponse.collection?.name || null,
+    imageUrl,
+    thumbnailUrl: imageUrl,
+    description: nftResponse.description,
   });
-  return formattedNfts;
-}
+};
+
+const formatOwnedNfts = (responseNfts: NftApiResponse[]): OwnedNft[] => {
+  return responseNfts.map(formatNftResponse);
+};
 
 // @@ TODO: Support pagination
-export async function getNftsByAddress(address: string): Promise< OwnedNft[] | null> { 
-  
+export const getNftsByAddress = async (address: string): Promise< OwnedNft[] | null> => { 
   const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
-
   try {
 
     if (!ALCHEMY_API_KEY) {
@@ -34,12 +55,13 @@ export async function getNftsByAddress(address: string): Promise< OwnedNft[] | n
     const options = { method: 'GET', headers: { accept: 'application/json' } };
     const res = await fetch(`https://eth-mainnet.g.alchemy.com/nft/v3/${ALCHEMY_API_KEY}/getNFTsForOwner?owner=${address}&withMetadata=true&pageSize=100`, options)
     const data = await res.json();
-    
+
     if (data.ownedNfts.length == 0) {
       return [];
     }
 
-    const nfts = mapDataToOwnedNfts(data.ownedNfts);
+    const nfts = formatOwnedNfts(data.ownedNfts);
+  
     return nfts;
   } catch (err) {
     console.log('Error: ', err);

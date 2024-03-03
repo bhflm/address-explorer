@@ -1,10 +1,9 @@
 export type OwnedNft = {
-  name: string;
-  description: string;
+  name: string | null;
+  description: string | null;
   contract: string;
-  symbol: string;
-  collectionName: string;
+  symbol: string | null;
+  collectionName: string | null;
   imageUrl: string;
-  thumbnailUrl: string;
-  tokenType: string;
+  thumbnailUrl: string ;
 }
