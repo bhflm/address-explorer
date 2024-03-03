@@ -27,7 +27,7 @@ const formatNftResponse = (nftResponse: NftApiResponse): OwnedNft => {
 
   const name = nftResponse.name || contract.name;
 
-  let imageUrl: string = getImageUrlOrDefaultPlaceholder({
+  const imageUrl = getImageUrlOrDefaultPlaceholder({
     imageData: nftResponse.image,
     contractData: contract,
   });
@@ -62,7 +62,7 @@ export const getNftsByAddress = async (address: string): Promise<OwnedNft[] | nu
     );
     const data = await res.json();
 
-    if (!data.ownedNfts || data.ownedNfts.length == 0) {
+    if (!data.ownedNfts || data.ownedNfts.length === 0) {
       return [];
     }
 
@@ -70,7 +70,7 @@ export const getNftsByAddress = async (address: string): Promise<OwnedNft[] | nu
 
     return nfts;
   } catch (err) {
-    console.log("Error: ", err);
+    // console.log("Error: ", err);
     return null;
   }
 };

@@ -28,13 +28,13 @@ export default function App() {
 
       setValidAddress(true);
     } catch (error) {
-      console.error("Error handling search", error);
+      // log error
+      setValidationError(null);
     }
   };
 
   const renderNftGallery = () => {
     if (address && validAddress && !validationError) {
-      console.log("Rendering nft gallery");
       return <NftGallery address={address} />;
     }
   };

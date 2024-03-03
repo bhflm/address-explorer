@@ -35,7 +35,7 @@ export function NftGallery({ address }: Props) {
         setNfts([]);
       }
     } catch (error) {
-      console.error("Error fetching NFTs:", error);
+      // console.error("Error fetching NFTs:", error);
       setNfts([]);
     } finally {
       setLoading(false);
@@ -59,7 +59,7 @@ export function NftGallery({ address }: Props) {
     }
 
     if (nfts) {
-      const previousPageShowIndex = currentPage - 1 == start ? null : currentPage - 1;
+      const previousPageShowIndex = currentPage - 1 === start ? null : currentPage - 1;
 
       const nextPageShowIndex =
         currentPage * nftsPerPage + 1 > nfts.length ? null : currentPage + 1;
