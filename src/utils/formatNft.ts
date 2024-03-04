@@ -50,7 +50,7 @@ export const formatNftResponse = (nftResponse: NftApiResponse): OwnedNft => {
   });
 
   const description = getDescriptionOrDefaultPlaceholder({
-    descriptionData: nftResponse.description
+    descriptionData: nftResponse.description,
   });
 
   return {
