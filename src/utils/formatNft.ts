@@ -1,5 +1,5 @@
 import { OwnedNft } from "@/src/types/ownedNft";
-import { NftApiResponse, ImageResponseData, ContractResponseData } from "@/src/types/rawNft";
+import { AlchemyNftWithMetadata, AlchemyImageData, AlchemyNftContract } from "@/src/types/nft";
 import { descriptionPlaceholderMessage, localFallbackImgPath } from "./constants";
 
 export const fallbackImgPlaceholderUrl = process.env.IMG_FALLBACK_URL || localFallbackImgPath;
@@ -8,8 +8,8 @@ const getImageUrlOrDefaultPlaceholder = ({
   imageData,
   contractData,
 }: {
-  imageData: ImageResponseData | null;
-  contractData: ContractResponseData | null;
+  imageData: AlchemyImageData | null;
+  contractData: AlchemyNftContract | null;
 }): string => {
   let imageUrl;
 
@@ -23,7 +23,7 @@ const getImageUrlOrDefaultPlaceholder = ({
   return imageUrl;
 };
 
-const getDescriptionOrDefaultPlaceholder = ({ descriptionData }: { descriptionData: string | null}) => {
+const getDescriptionOrDefaultPlaceholder = ({ descriptionData }: { descriptionData?: string | null}) => {
   let description = descriptionPlaceholderMessage;
   if (descriptionData) {
     description = descriptionData;
@@ -33,10 +33,10 @@ const getDescriptionOrDefaultPlaceholder = ({ descriptionData }: { descriptionDa
   return description;
 };
 
-export const formatNftResponse = (nftResponse: NftApiResponse): OwnedNft => {
+export const formatNftResponse = (nftResponse: AlchemyNftWithMetadata): OwnedNft => {
   const { contract } = nftResponse;
 
-  const name = nftResponse.name || contract.name;
+  const name = nftResponse.name || contract.name || nftResponse.tokenId;
 
   const imageUrl = getImageUrlOrDefaultPlaceholder({
     imageData: nftResponse.image,
@@ -47,17 +47,18 @@ export const formatNftResponse = (nftResponse: NftApiResponse): OwnedNft => {
     descriptionData: nftResponse.description,
   });
 
-  return {
+  const ownedNft = {
     name,
     contract: contract?.address,
-    symbol: contract?.symbol,
     collectionName: nftResponse.collection?.name || null,
     imageUrl,
     thumbnailUrl: imageUrl,
     description,
   };
+
+  return ownedNft;
 };
 
-export const formatOwnedNfts = (responseNfts: NftApiResponse[]): OwnedNft[] => {
+export const formatOwnedNfts = (responseNfts: any[]): OwnedNft[] => {
   return responseNfts.map(formatNftResponse);
 };
