@@ -4,6 +4,7 @@ import { Alchemy, Network, NftFilters } from "alchemy-sdk";
 
 import { OwnedNft } from "../types/ownedNft";
 import { formatOwnedNfts } from "../utils/formatNft";
+import { AlchemyNftWithMetadata } from "../types/nft";
 
 interface GetNftsResponse {
   nfts: OwnedNft[] | null,
@@ -39,7 +40,7 @@ export const getNftsByAddress = async (address: string, pageKey?: string): Promi
     const data = await alchemy.nft.getNftsForOwner(address, options);
 
     const response = {
-      nfts: data.ownedNfts.length > 0 ? formatOwnedNfts(data.ownedNfts) : [],
+      nfts: data.ownedNfts.length > 0 ? formatOwnedNfts(data.ownedNfts as unknown as AlchemyNftWithMetadata[]) : [],
       pageKey: data.pageKey ?? null,
     };
 
