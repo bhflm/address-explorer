@@ -1,6 +1,3 @@
-import { isAddress } from "viem";
+import { isAddress as isValidEthAddress } from "viem";
 
-export function isValidEthAddress(address: string): boolean {
-  const isValid = isAddress(address);
- return isValid;
-}
+export const isValidAddress = (address: string): boolean => isValidEthAddress(address);

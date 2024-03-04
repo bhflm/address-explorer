@@ -4,7 +4,6 @@ import { Alchemy, Network, NftFilters } from "alchemy-sdk";
 
 import { OwnedNft } from "../types/ownedNft";
 import { formatOwnedNfts } from "../utils/formatNft";
-import { isValidEthAddress } from "../utils/validEthAddress";
 
 interface GetNftsResponse {
   nfts: OwnedNft[] | null,
@@ -25,25 +24,10 @@ const alchemy = new Alchemy({
   network: Network.ETH_MAINNET,
 });
 
-const getAddressByEns = async (ens: string): Promise<string | null> => {
-  try {
-    const address = await alchemy.core.resolveName(ens);
-    return address;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error("Error while resolving address: ", error);
-    return null;
-  }
-};
-
 export const getNftsByAddress = async (address: string, pageKey?: string): Promise<any | null> => {
   try {
     if (!alchemyApiKey) {
       throw new Error("Missing Alchemy Api Key");
-    }
-
-    if (!isValidEthAddress(address)) {
-      throw new Error(`Invalid address: ${address}`);
     }
 
     const options = {

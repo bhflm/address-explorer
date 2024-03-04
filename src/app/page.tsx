@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 import { Button } from "@/src/components/ui/button";
@@ -9,7 +10,7 @@ import Header from "@/src/components/header";
 import NftGallery from "@/src/components/nftGallery";
 
 import { invalidEthAddressMessage } from "@/src/utils/constants";
-import { isValidEthAddress } from "@/src/utils/validEthAddress";
+import { isValidAddress } from "@/src/utils/validEthAddress";
 
 export default function App() {
   const [address, setAddress] = useState<string | null>(null);
@@ -26,14 +27,13 @@ export default function App() {
     try {
       setValidationError(null);
 
-      if (address && isValidEthAddress(address)) {
+      if (address && isValidAddress(address)) {
         setValidAddress(true);
         return;
       }
       setValidationError(invalidEthAddressMessage);
       setValidAddress(false);
     } catch (error) {
-      // log error
       setValidationError(null);
     }
   };

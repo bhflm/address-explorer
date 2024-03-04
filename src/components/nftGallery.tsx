@@ -25,6 +25,7 @@ const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
     if (pageKey && (currentPage * nftsPerPage) + nftsPerPage >= nfts.length) {
       try {
         const response = await getNftsByAddress(address, pageKey);
+
         const fetchedNfts = response?.nfts;
 
         if (fetchedNfts) {
