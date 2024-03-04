@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/src/components/ui/dialog";
 
-import { ImageWithFallback } from "@/src/components/ImageWithFallback";
+// import { ImageWithFallback } from "@/src/components/ImageWithFallback";
 
 import { OwnedNft } from "../types/ownedNft";
 
@@ -20,7 +20,6 @@ const fallbackImgPath = "/wcblack.png";
 
 export function NftCard(props: { nftData: OwnedNft }) {
   const { nftData } = props;
-
   const altText =
     nftData.description || nftData.name || nftData.collectionName || "Alt text not found";
 
@@ -34,7 +33,9 @@ export function NftCard(props: { nftData: OwnedNft }) {
         </CardHeader>
         <CardContent className="flex justify-center">
           <div className="w-[175px] h-[125px] sm:w-[225px] sm:h-[220px] relative">
-            <ImageWithFallback fallbackSrc={fallbackImgPath} alt={altText} src={nftData.thumbnailUrl} fill={true} className="rounded-2xl" />
+            {/* <ImageWithFallback fallbackSrc={fallbackImgPath} alt={altText} src={nftData.thumbnailUrl} fill={true} className="rounded-2xl" /> */}
+
+            <Image alt={altText} src={nftData.thumbnailUrl} fill={true} className="rounded-2xl" />
           </div>
         </CardContent>
         <CardFooter>

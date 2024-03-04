@@ -17,7 +17,6 @@ export function NftGallery({ address }: Props) {
   const nftsPerPage = 4;
 
   const handleNextPage = async () => {
-
     setCurrentPage((prevPage) => prevPage + 1);
 
     if (pageKey && (currentPage * nftsPerPage) + nftsPerPage >= nfts.length) {
@@ -25,8 +24,6 @@ export function NftGallery({ address }: Props) {
       try {
         const response = await getNftsByAddress(address, pageKey);
         const fetchedNfts = response?.nfts;
-
-        console.log('new nfts: ', fetchedNfts);
 
         if (fetchedNfts) {
           setNfts((prevNfts) => [...prevNfts, ...fetchedNfts]);
@@ -36,10 +33,10 @@ export function NftGallery({ address }: Props) {
           setPageKey(response.pageKey);
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error fetching additional NFTs:", error);
       }
     }
-
   };
 
   const handlePrevPage = () => {
@@ -79,7 +76,7 @@ export function NftGallery({ address }: Props) {
     if (nfts) {
       const startIndex = (currentPage - 1) * nftsPerPage;
       const endIndex = startIndex + nftsPerPage;
-      console.log('Nfts to render: ', nfts.slice(startIndex, endIndex));
+      // console.log("Nfts to render: ", nfts.slice(startIndex, endIndex));
 
       return nfts.slice(startIndex, endIndex).map((nft, i) => <NftCard key={i} nftData={nft} />);
     }
