@@ -1,7 +1,7 @@
 import * as React from "react";
 import Image from "next/image";
 
-export function Header() {
+const Header: React.FC = () => {
   return (
     <header className="">
       <nav className="mx-auto flex items-center justify-between p-6 sm:px-8" aria-label="Global">
@@ -12,4 +12,6 @@ export function Header() {
       </nav>
     </header>
   );
-}
+};
+
+export default Header;

@@ -1,8 +1,8 @@
 import { OwnedNft } from "@/src/types/ownedNft";
 import { NftApiResponse, ImageResponseData, ContractResponseData } from "@/src/types/rawNft";
-import { descriptionPlaceholderMessage } from "./constants";
+import { descriptionPlaceholderMessage, localFallbackImgPath } from "./constants";
 
-export const fallbackImgPlaceholderUrl = process.env.IMG_FALLBACK_URL || "http://placekitten.com/400/400";
+export const fallbackImgPlaceholderUrl = process.env.IMG_FALLBACK_URL || localFallbackImgPath;
 
 const getImageUrlOrDefaultPlaceholder = ({
   imageData,

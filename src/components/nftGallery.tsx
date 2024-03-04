@@ -1,16 +1,18 @@
-import { useEffect, useState, useCallback } from "react";
-import { Button } from "@/src/components/ui/button";
+import React, { useEffect, useState, useCallback } from "react";
 
+import { OwnedNft } from "@/src/types/ownedNft";
 import { getNftsByAddress } from "@/src/actions/getNftsByAddress";
-import { NftCard } from "./nftCard";
-import { OwnedNft } from "../types/ownedNft";
-import { LoadingSpinner } from "./ui/loadingSpinner";
 
-type Props = {
+import { Button } from "@/src/components/ui/button";
+import { LoadingSpinner } from "@/src/components/ui/loadingSpinner";
+
+import NftCard from "@/src/components/nftCard";
+
+interface NftGalleryProps {
   address: string;
-};
+}
 
-export function NftGallery({ address }: Props) {
+const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
   const [nfts, setNfts] = useState<OwnedNft[]>([]);
   const [pageKey, setPageKey] = useState<string | null>(null);
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -126,4 +128,6 @@ export function NftGallery({ address }: Props) {
       {renderGalleryButtons()}
     </div>
   );
-}
+};
+
+export default NftGallery;

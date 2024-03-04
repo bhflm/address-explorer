@@ -1,5 +1,4 @@
 import * as React from "react";
-import Image from "next/image";
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/src/components/ui/card";
 
@@ -12,12 +11,16 @@ import {
   DialogTrigger,
 } from "@/src/components/ui/dialog";
 
+import ImageFallback from "@/src/components/imageWithFallback";
+
 import { OwnedNft } from "../types/ownedNft";
+import { localFallbackImgPath } from "@/src/utils/constants";
 
-const fallbackImgPath = "/wcblack.png";
+interface NftCardProps {
+  nftData: OwnedNft
+}
 
-export function NftCard(props: { nftData: OwnedNft }) {
-  const { nftData } = props;
+const NftCard: React.FC <NftCardProps> = ({ nftData }) => {
   const altText =
     nftData.description || nftData.name || nftData.collectionName || "Alt text not found";
 
@@ -31,7 +34,7 @@ export function NftCard(props: { nftData: OwnedNft }) {
         </CardHeader>
         <CardContent className="flex justify-center">
           <div className="w-[175px] h-[125px] sm:w-[225px] sm:h-[220px] relative">
-            <Image alt={altText} src={nftData.thumbnailUrl} fill={true} className="rounded-2xl" />
+            <ImageFallback alt={altText} src={nftData.thumbnailUrl} fallbackSrc={localFallbackImgPath} fill={true} className="rounded-2xl" />
           </div>
         </CardContent>
         <CardFooter>
@@ -52,4 +55,6 @@ export function NftCard(props: { nftData: OwnedNft }) {
       </Card>
     </div>
   );
-}
+};
+
+export default NftCard;
