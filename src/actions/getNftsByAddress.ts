@@ -8,10 +8,30 @@ interface GetNftsResponse {
   pageKey: string | null
 }
 
+interface AdditionalParams {
+  address: string;
+  addMetadata: boolean;
+  pageSize: number;
+  pageKey?: string;
+}
+
+const buildAdditionalParams = ({ address, addMetadata, pageSize, pageKey }: AdditionalParams) => {
+  const ownerParam = `owner=${address}`;
+  const metadataParam = `withMetadata=${addMetadata}`;
+  const pageSizeParam = `pageSize=${pageSize}`;
+  const pageKeyParam = pageKey ? `pageKey=${pageKey}` : "";
+
+  const paramsArray = [ownerParam, metadataParam, pageSizeParam, pageKeyParam].filter(Boolean);
+
+  return "?" + paramsArray.join("&");
+};
+
 export const getNftsByAddress = async (address: string, pageKey?: string): Promise<GetNftsResponse | null> => {
-  const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
+  const alchemyApiKey = process.env.ALCHEMY_API_KEY;
+  const alchemyMainnetUrl = process.env.ALCHEMY_MAINNET_URL_V3;
+
   try {
-    if (!ALCHEMY_API_KEY) {
+    if (!alchemyApiKey) {
       throw new Error("Missing Alchemy Api Key");
     }
 
@@ -20,8 +40,16 @@ export const getNftsByAddress = async (address: string, pageKey?: string): Promi
     }
 
     const options = { method: "GET", headers: { accept: "application/json" } };
+
+    const additionalParams = buildAdditionalParams({
+      address,
+      addMetadata: true,
+      pageSize: 100,
+      pageKey,
+    });
+
     const res = await fetch(
-      `https://eth-mainnet.g.alchemy.com/nft/v3/${ALCHEMY_API_KEY}/getNFTsForOwner?owner=${address}&withMetadata=true&pageSize=100`,
+      `${alchemyMainnetUrl}/${alchemyApiKey}/getNFTsForOwner${additionalParams}`,
       options,
     );
     const data = await res.json();
