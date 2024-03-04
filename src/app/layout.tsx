@@ -3,7 +3,7 @@ import React from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { cn, fontSans } from "../utils/utils";
+import { cn, fontSans } from "@/src/utils/fonts";
 
 export const metadata: Metadata = {
   title: "Address NFT Explorer",
