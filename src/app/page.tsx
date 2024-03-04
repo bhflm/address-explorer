@@ -14,19 +14,20 @@ export default function App() {
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const handleInputChange = () => {
-    setValidationError("");
+    setValidationError(null);
+    setValidAddress(false);
   };
 
   const handleSearch = () => {
     try {
       setValidationError(null);
-      if (!address || !isValidEthAddress(address)) {
-        setValidationError("Please enter a valid Ethereum address");
-        setValidAddress(false);
+
+      if (address && isValidEthAddress(address)) {
+        setValidAddress(true);
         return;
       }
-
-      setValidAddress(true);
+      setValidationError("Please enter a valid Ethereum address");
+      setValidAddress(false);
     } catch (error) {
       // log error
       setValidationError(null);
@@ -34,8 +35,8 @@ export default function App() {
   };
 
   const renderNftGallery = () => {
-    if (address && validAddress && !validationError) {
-      return <NftGallery address={address} />;
+    if (validAddress && !validationError) {
+      return <NftGallery address={address!} />;
     }
   };
 
@@ -51,7 +52,7 @@ export default function App() {
       <div className="searchbar sm:mt-12 flex justify-center">
         <div className="flex flex-col items-center sm:w-1/3">
           <Input
-            className="w-full truncate hover:text-clip sm:w-1/2"
+            className="w-[250px] truncate hover:text-clip sm:w-1/2"
             type="address"
             placeholder="Address"
             onChange={(e) => {

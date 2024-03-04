@@ -72,7 +72,7 @@ export function NftGallery({ address }: Props) {
     fetchNfts();
   }, [address, fetchNfts]);
 
-  const renderFixedNfts = () => {
+  const renderNfts = () => {
     if (nfts) {
       const startIndex = (currentPage - 1) * nftsPerPage;
       const endIndex = startIndex + nftsPerPage;
@@ -120,7 +120,7 @@ export function NftGallery({ address }: Props) {
         {
          isLoading
           ? <LoadingSpinner className="mt-12 sm:mt-8" />
-          : renderFixedNfts()
+          : renderNfts()
         }
       </div>
       {renderGalleryButtons()}

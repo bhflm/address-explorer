@@ -1,3 +1,6 @@
-export const isValidEthAddress = (address: string) => {
-  return /^0x[a-fA-F0-9]{40}$/.test(address);
+import { isAddress } from 'viem';
+
+export function isValidEthAddress(address: string): boolean {
+  const isValid = isAddress(address);
+ return isValid;
 };
