@@ -1,6 +1,6 @@
 "use server";
 
-import { Alchemy, Network, NftFilters } from "alchemy-sdk";
+import { Alchemy, Network, NftFilters, NftOrdering } from "alchemy-sdk";
 
 import { OwnedNft } from "../types/ownedNft";
 import { formatOwnedNfts } from "../utils/formatNft";
@@ -11,13 +11,6 @@ interface GetNftsResponse {
   pageKey: string | null
 }
 
-interface AdditionalParams {
-  address: string;
-  addMetadata: boolean;
-  pageSize: number;
-  pageKey?: string;
-}
-
 const alchemyApiKey = process.env.ALCHEMY_API_KEY;
 
 const alchemy = new Alchemy({
@@ -25,7 +18,13 @@ const alchemy = new Alchemy({
   network: Network.ETH_MAINNET,
 });
 
-export const getNftsByAddress = async (address: string, pageKey?: string): Promise<any | null> => {
+interface GetNftsByAddressPayload {
+  address: string;
+  pageKey?: string;
+  orderByTransferTime: boolean;
+}
+
+export const getNftsByAddress = async ({ address, pageKey, orderByTransferTime }: GetNftsByAddressPayload): Promise<GetNftsResponse | null> => {
   try {
     if (!alchemyApiKey) {
       throw new Error("Missing Alchemy Api Key");
@@ -35,12 +34,15 @@ export const getNftsByAddress = async (address: string, pageKey?: string): Promi
       excludeFilters: [NftFilters.AIRDROPS],
       pageSize: 100,
       ...(pageKey && { pageKey }),
+      ...(orderByTransferTime && { orderBy: NftOrdering.TRANSFERTIME }),
     };
 
     const data = await alchemy.nft.getNftsForOwner(address, options);
 
+    const nfts = data.ownedNfts.length > 0 ? formatOwnedNfts(data.ownedNfts as unknown as AlchemyNftWithMetadata[]) : [];
+
     const response = {
-      nfts: data.ownedNfts.length > 0 ? formatOwnedNfts(data.ownedNfts as unknown as AlchemyNftWithMetadata[]) : [],
+      nfts,
       pageKey: data.pageKey ?? null,
     };
 
