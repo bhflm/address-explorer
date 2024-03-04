@@ -59,6 +59,6 @@ export const formatNftResponse = (nftResponse: AlchemyNftWithMetadata): OwnedNft
   return ownedNft;
 };
 
-export const formatOwnedNfts = (responseNfts: any[]): OwnedNft[] => {
+export const formatOwnedNfts = (responseNfts: AlchemyNftWithMetadata[]): OwnedNft[] => {
   return responseNfts.map(formatNftResponse);
 };
