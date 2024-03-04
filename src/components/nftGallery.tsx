@@ -62,7 +62,6 @@ const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
         setPageKey(response?.pageKey);
       }
     } catch (error) {
-      // console.error("Error fetching NFTs:", error);
       setNfts([]);
     } finally {
       setLoading(false);
@@ -78,8 +77,6 @@ const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
     if (nfts) {
       const startIndex = (currentPage - 1) * nftsPerPage;
       const endIndex = startIndex + nftsPerPage;
-      // console.log("Nfts to render: ", nfts.slice(startIndex, endIndex));
-
       return nfts.slice(startIndex, endIndex).map((nft, i) => <NftCard key={i} nftData={nft} />);
     }
   };
