@@ -2,12 +2,7 @@ import { OwnedNft } from "@/src/types/ownedNft";
 import { NftApiResponse, ImageResponseData, ContractResponseData } from "@/src/types/rawNft";
 import { descriptionPlaceholderMessage } from "./constants";
 
-export const getRandomImgPlaceholder = () => {
-  const randomImgPlaceholderBaseUrl = "http://placekitten.com";
-  const randomKittenId = Math.floor(Math.random() * 9) + 1;
-  const endpoint = `g/40${randomKittenId}/400`;
-  return `${randomImgPlaceholderBaseUrl}/${endpoint}`;
-};
+export const fallbackImgPlaceholderUrl = process.env.IMG_FALLBACK_URL || "http://placekitten.com/400/400";
 
 const getImageUrlOrDefaultPlaceholder = ({
   imageData,
@@ -23,7 +18,7 @@ const getImageUrlOrDefaultPlaceholder = ({
   } else if (contractData && contractData.openSeaMetadata.imageUrl) {
     imageUrl = contractData.openSeaMetadata.imageUrl;
   } else {
-    imageUrl = getRandomImgPlaceholder();
+    imageUrl = fallbackImgPlaceholderUrl;
   }
   return imageUrl;
 };
