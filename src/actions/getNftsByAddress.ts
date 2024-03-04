@@ -3,8 +3,12 @@
 import { OwnedNft } from "../types/ownedNft";
 import { formatOwnedNfts } from "../utils/formatNft";
 
-// @@ TODO: Support pagination
-export const getNftsByAddress = async (address: string): Promise<OwnedNft[] | null> => {
+interface GetNftsResponse {
+  nfts: OwnedNft[] | null,
+  pageKey: string | null
+}
+
+export const getNftsByAddress = async (address: string, pageKey?: string): Promise<GetNftsResponse | null> => {
   const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
   try {
     if (!ALCHEMY_API_KEY) {
@@ -18,15 +22,15 @@ export const getNftsByAddress = async (address: string): Promise<OwnedNft[] | nu
     );
     const data = await res.json();
 
-    if (!data.ownedNfts || data.ownedNfts.length === 0) {
-      return [];
-    }
+    const response: GetNftsResponse = {
+      nfts: data.ownedNfts.length > 0 ? formatOwnedNfts(data.ownedNfts) : null,
+      pageKey: data.pageKey ?? null,
+    };
 
-    const nfts = formatOwnedNfts(data.ownedNfts);
-
-    return nfts;
+    return response;
   } catch (err) {
-    // console.log("Error: ", err);
+    // eslint-disable-next-line no-console
+    console.error("Error: ", err);
     return null;
   }
 };

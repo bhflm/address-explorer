@@ -11,12 +11,35 @@ type Props = {
 
 export function NftGallery({ address }: Props) {
   const [nfts, setNfts] = useState<OwnedNft[]>([]);
-  const [isLoading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [pageKey, setPageKey] = useState<string | null>(null);
+  const [isLoading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const nftsPerPage = 4;
 
-  const handleNextPage = () => {
+  const handleNextPage = async () => {
+
     setCurrentPage((prevPage) => prevPage + 1);
+
+    if (pageKey && (currentPage * nftsPerPage) + nftsPerPage >= nfts.length) {
+      // Fetch the next page of NFTs
+      try {
+        const response = await getNftsByAddress(address, pageKey);
+        const fetchedNfts = response?.nfts;
+
+        console.log('new nfts: ', fetchedNfts);
+
+        if (fetchedNfts) {
+          setNfts((prevNfts) => [...prevNfts, ...fetchedNfts]);
+        }
+
+        if (response?.pageKey) {
+          setPageKey(response.pageKey);
+        }
+      } catch (error) {
+        console.error("Error fetching additional NFTs:", error);
+      }
+    }
+
   };
 
   const handlePrevPage = () => {
@@ -28,11 +51,16 @@ export function NftGallery({ address }: Props) {
 
   const fetchNfts = useCallback(async () => {
     try {
-      const fetchedNfts = await getNftsByAddress(address);
+      const response = await getNftsByAddress(address);
+      const fetchedNfts = response?.nfts;
       if (fetchedNfts) {
         setNfts(fetchedNfts);
       } else {
         setNfts([]);
+      }
+
+      if (response?.pageKey) {
+        setPageKey(response?.pageKey);
       }
     } catch (error) {
       // console.error("Error fetching NFTs:", error);
@@ -49,7 +77,11 @@ export function NftGallery({ address }: Props) {
 
   const renderFixedNfts = () => {
     if (nfts) {
-      return nfts.slice(start, end).map((nft, i) => <NftCard key={i} nftData={nft} />);
+      const startIndex = (currentPage - 1) * nftsPerPage;
+      const endIndex = startIndex + nftsPerPage;
+      console.log('Nfts to render: ', nfts.slice(startIndex, endIndex));
+
+      return nfts.slice(startIndex, endIndex).map((nft, i) => <NftCard key={i} nftData={nft} />);
     }
   };
 
