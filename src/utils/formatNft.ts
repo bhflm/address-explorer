@@ -1,14 +1,13 @@
 import { OwnedNft } from "@/src/types/ownedNft";
 import { NftApiResponse, ImageResponseData, ContractResponseData } from "@/src/types/rawNft";
+import { descriptionPlaceholderMessage } from "./constants";
 
 export const getRandomImgPlaceholder = () => {
+  const randomImgPlaceholderBaseUrl = "http://placekitten.com";
   const randomKittenId = Math.floor(Math.random() * 9) + 1;
-  const baseUrl = "http://placekitten.com";
-  const path = `g/40${randomKittenId}/400`;
-  return `${baseUrl}/${path}`;
+  const endpoint = `g/40${randomKittenId}/400`;
+  return `${randomImgPlaceholderBaseUrl}/${endpoint}`;
 };
-
-const descriptionPlaceholder = "Sorry, we couldn't find any description related to this NFT";
 
 const getImageUrlOrDefaultPlaceholder = ({
   imageData,
@@ -30,11 +29,11 @@ const getImageUrlOrDefaultPlaceholder = ({
 };
 
 const getDescriptionOrDefaultPlaceholder = ({ descriptionData }: { descriptionData: string | null}) => {
-  let description = descriptionPlaceholder;
+  let description = descriptionPlaceholderMessage;
   if (descriptionData) {
     description = descriptionData;
   } else {
-    description = descriptionPlaceholder;
+    description = descriptionPlaceholderMessage;
   }
   return description;
 };

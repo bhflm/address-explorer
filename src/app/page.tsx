@@ -5,7 +5,8 @@ import { Header } from "@/src/components/header";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { NftGallery } from "@/src/components/nftGallery";
-import { Alert, AlertDescription, AlertTitle } from "@/src/components/ui/alert";
+import { Alert, AlertDescription } from "@/src/components/ui/alert";
+import { VALID_ETH_ADDRESS } from "@/src/utils/constants";
 import { isValidEthAddress } from "@/src/utils/validEthAddress";
 
 export default function App() {
@@ -27,7 +28,7 @@ export default function App() {
         setValidAddress(true);
         return;
       }
-      setValidationError("Please enter a valid Ethereum address");
+      setValidationError(VALID_ETH_ADDRESS);
       setValidAddress(false);
     } catch (error) {
       // log error
