@@ -4,6 +4,7 @@ import { Button } from "@/src/components/ui/button";
 import { getNftsByAddress } from "@/src/actions/getNftsByAddress";
 import { NftCard } from "./nftCard";
 import { OwnedNft } from "../types/ownedNft";
+import { LoadingSpinner } from "./ui/loadingSpinner";
 
 type Props = {
   address: string;
@@ -20,7 +21,6 @@ export function NftGallery({ address }: Props) {
     setCurrentPage((prevPage) => prevPage + 1);
 
     if (pageKey && (currentPage * nftsPerPage) + nftsPerPage >= nfts.length) {
-      // Fetch the next page of NFTs
       try {
         const response = await getNftsByAddress(address, pageKey);
         const fetchedNfts = response?.nfts;
@@ -117,7 +117,11 @@ export function NftGallery({ address }: Props) {
   return (
     <div>
       <div className="flex flex-col items-center sm:flex-row sm:justify-center sm:flex-wrap">
-        {renderFixedNfts()}
+        {
+         isLoading
+          ? <LoadingSpinner className="mt-12 sm:mt-8" />
+          : renderFixedNfts()
+        }
       </div>
       {renderGalleryButtons()}
     </div>
