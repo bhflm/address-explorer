@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/src/components/ui/button";
 
-import { getNftsByAddress } from "@/src/utils/server/getNftsByAddress";
+import { getNftsByAddress } from "@/src/actions/getNftsByAddress";
 import { NftCard } from "./nftCard";
 import { OwnedNft } from "../types/ownedNft";
 
