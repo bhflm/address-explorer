@@ -97,7 +97,7 @@ const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
         </>
         );
     } else {
-      return (<Alert className="mt-8 sm:mt-24 sm:w-1/2 border-2 text-white border-black bg-slate-700">
+      return (<Alert className="mt-8 sm:mt-24 w-1/2 sm:w-1/4 border-2 text-white border-black bg-slate-700">
       <AlertDescription className="text-center">
       👀 No nfts to show for current address 👀
       </AlertDescription>
