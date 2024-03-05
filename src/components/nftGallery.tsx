@@ -5,6 +5,7 @@ import { getNftsByAddress } from "@/src/actions/getNftsByAddress";
 
 import { Button } from "@/src/components/ui/button";
 import { LoadingSpinner } from "@/src/components/ui/loadingSpinner";
+import { Alert, AlertDescription } from "@/src/components/ui/alert";
 
 import NftCard from "@/src/components/nftCard";
 
@@ -87,7 +88,7 @@ const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
   }, [address, fetchNfts, orderByTransferTime]);
 
   const renderNfts = () => {
-    if (nfts) {
+    if (nfts.length > 0) {
       const startIndex = (currentPage - 1) * nftsPerPage;
       const endIndex = startIndex + nftsPerPage;
       return (
@@ -95,6 +96,12 @@ const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
         {nfts.slice(startIndex, endIndex).map((nft, i) => <NftCard key={i} nftData={nft} />)}
         </>
         );
+    } else {
+      return (<Alert className="mt-8 sm:mt-24 sm:w-1/2 border-2 text-white border-black bg-slate-700">
+      <AlertDescription className="text-center">
+      👀 No nfts to show for current address 👀
+      </AlertDescription>
+    </Alert>);
     }
   };
 
@@ -116,14 +123,14 @@ const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
             onClick={handlePrevPage}
             disabled={currentPage === 1}
           >
-            Previous {previousPageShowIndex}
+            {previousPageShowIndex} ⏪ Previous
           </Button>
           <Button
             className="border-0.5 m-4 sm:w-1/3 sm:m-4"
             onClick={handleNextPage}
             disabled={end >= nfts.length}
           >
-            Next {nextPageShowIndex}
+            Next ⏩ {nextPageShowIndex}
           </Button>
         </div>
       );

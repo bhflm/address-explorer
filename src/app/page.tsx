@@ -65,14 +65,14 @@ export default function App() {
             }}
           />
           <Button className="border-0.5 mt-4 sm:w-1/3" type="submit" onClick={() => handleSearch()}>
-            Search
+            Search 🔎
           </Button>
           {validationError && (
             <Alert className="mt-8 sm:mt-24 sm:w-1/2 border-2 border-black bg-yellow-600">
               <AlertDescription className="text-center">
                 {validationError}
               </AlertDescription>
-          </Alert>
+            </Alert>
           )}
         </div>
       </div>
