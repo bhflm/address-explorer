@@ -1,6 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Address Explorer
 
-## Getting Started
+Implementation of `CHALLENGE.md`. 
+
+Surfaces a UI which allows users to display Nfts based on an input `address`. 
+Implements 
+Exposes simple pagination, and `orderBy` toggle, which requests for nfts based on transaction time, [_more_](https://docs.alchemy.com/reference/getnfts-sdk-v3)
+
+This project uses [Next.js] (https://nextjs.org/docs/basic-features/font-optimization), [Shadcn UI](https://ui.shadcn.com/), and the [Alchemy SDK](https://www.alchemy.com/sdk) for fetching NFT related info, among many more dependencies.  
+
+## Local setup
+
+⚠️ Beforehand, please make sure to copy the `.env.example` file, and populate your own `.env.local` for local development, or `.env` with provided keys.  
 
 First, run the development server:
 
@@ -16,21 +26,13 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
+Misc docs:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Shadcn UI](https://ui.shadcn.com/docs)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Deploys on Vercel
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project demo has been deployed on Vercel, and is accessible at [https://address-explorer-liard.vercel.app/](https://address-explorer-liard.vercel.app/).
