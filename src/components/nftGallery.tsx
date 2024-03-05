@@ -73,6 +73,8 @@ const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
         setPageKey(response?.pageKey);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Error fetching NFTs:", error);
       setNfts([]);
     } finally {
       setLoading(false);
@@ -137,7 +139,6 @@ const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
       return (
         <div className="flex justify-center">
           <Button
-          // top-0 left-0 z-10 p-4 border-0.5 m-4 sm:p-2 for mobile
               className={`w-1/8 border-0.5 m-4 sm:p-2 sm:m-4 ${orderByTransferTime ? "bg-blue-800" : "bg-blue-300"}`}
               onClick={toggleOrderByTransferTime}
           >

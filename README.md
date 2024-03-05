@@ -1,4 +1,4 @@
-## Address Explorer
+# Address Explorer
 
 Implementation of `CHALLENGE.md`. 
 
@@ -25,7 +25,6 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
 
 Misc docs:
 
