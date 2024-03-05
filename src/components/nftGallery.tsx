@@ -130,7 +130,7 @@ const NftGallery: React.FC<NftGalleryProps> = ({ address }) => {
             onClick={handleNextPage}
             disabled={end >= nfts.length}
           >
-            Next ⏩ {nextPageShowIndex}
+            Next ⏩ {nextPageShowIndex} {pageKey ? "+" : ""}
           </Button>
         </div>
       );
