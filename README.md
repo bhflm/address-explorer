@@ -1,10 +1,8 @@
 # Address Explorer
 
-Implementation of `CHALLENGE.md`. 
-
 Surfaces a UI which allows users to display Nfts based on an input `address`. 
-Implements 
-Exposes simple pagination, and `orderBy` toggle, which requests for nfts based on transaction time, [_more_](https://docs.alchemy.com/reference/getnfts-sdk-v3)
+
+Offers simple pagination, and an `order by transfer time` toggle, which requests for nfts based on transfer time, [_more here_](https://docs.alchemy.com/reference/getnfts-sdk-v3)
 
 This project uses [Next.js] (https://nextjs.org/docs/basic-features/font-optimization), [Shadcn UI](https://ui.shadcn.com/), and the [Alchemy SDK](https://www.alchemy.com/sdk) for fetching NFT related info, among many more dependencies.  
 
